@@ -13,3 +13,23 @@
   border-radius: 5px;
   border: dashed 2px #ddd;
 }
+
+.thumbnail-container {
+  display: flex;
+  margin-top: 20px;
+}
+
+.thumbnail-wrapper {
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.image {
+  display: block;
+  width: auto;
+  height: 100%;
+}

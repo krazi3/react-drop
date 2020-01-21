@@ -34,8 +34,8 @@ export default function () {
         <h2>Drop your files here...</h2>
       </div>
       <div className="thumbnail-container">
-        {files.map(file => (
-          <div className="thumbnail-wrapper">
+        {files.map((file, index) => (
+          <div key={index} className="thumbnail-wrapper">
             <img className="image" alt="" src={file.preview} />
           </div>
         ))}

@@ -2,33 +2,32 @@ import React, { useState, useCallback } from 'react';
 import './style.css';
 
 export default function ({ onDrop }) {
-  const [files, setFiles] = useState([]);
+  const [file, setFile] = useState(null);
 
   const onDropCb = useCallback((event) => {
     event.preventDefault();
     event.persist();
 
-    let acceptedFiles = [];
+    let uploadedFile;
 
     if (event.dataTransfer.items) {
+      // loop and get first file
       for (let i = 0; i < event.dataTransfer.items.length; i++) {
         if (event.dataTransfer.items[i].kind === 'file') {
-          let file = event.dataTransfer.items[i].getAsFile();
-          file.preview = URL.createObjectURL(file);
-          acceptedFiles.push(file);
+          uploadedFile = event.dataTransfer.items[i].getAsFile();
+          uploadedFile.preview = URL.createObjectURL(uploadedFile);
+          break;
         }
       }
     } else {
-      for (let i = 0; i < event.dataTransfer.files.length; i++) {
-        let file = event.dataTransfer.files[i];
-        file.preview = URL.createObjectURL(file);
-        acceptedFiles.push(file);
-      }
+      uploadedFile = event.dataTransfer.files[0];
+      uploadedFile.preview = URL.createObjectURL(uploadedFile);
     }
-    setFiles(acceptedFiles);
+
+    setFile(uploadedFile);
 
     if (onDrop) {
-      onDrop(acceptedFiles);
+      onDrop(uploadedFile);
     }
   }, [ onDrop ]);
 
@@ -37,13 +36,12 @@ export default function ({ onDrop }) {
       <div className="dotted" onDrop={onDropCb} onDragOver={event => event.preventDefault()}>
         <h2>Drop your files here...</h2>
       </div>
-      <div className="thumbnail-container">
-        {files.map((file, index) => (
-          <div key={index} className="thumbnail-wrapper">
-            <img className="image" alt="" src={file.preview} />
-          </div>
-        ))}
+      {file && (
+        <div className="preview-wrapper">
+          <h2 className="heading">Preview</h2>
+          <img className="preview" alt="" src={file.preview} />
       </div>
+      )}
     </div>
   );
 }

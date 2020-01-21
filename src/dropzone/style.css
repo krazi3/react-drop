@@ -1,35 +1,35 @@
 .wrapper {
+  display: flex;
   padding: 15px;
   border: 1px solid #ddd;
 }
 
 .dotted {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #f5f5f5;
   color: #aaa;
-  min-height: 150px;
+  min-height: 300px;
   border-radius: 5px;
   border: dashed 2px #ddd;
 }
 
-.thumbnail-container {
-  display: flex;
-  margin-top: 20px;
-}
-
-.thumbnail-wrapper {
-  border: 1px solid #ddd;
-  border-radius: 2px;
-  width: 100px;
-  height: 100px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
-
-.image {
+.preview {
   display: block;
-  width: auto;
-  height: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.preview-wrapper {
+  flex: 1;
+  margin-left: 10px;
+  max-width: 500px;
+}
+
+.heading {
+  color: #222;
+  margin: 0;
+  margin-bottom: 10px;
 }

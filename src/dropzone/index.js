@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import './style.css';
 
-export default function () {
+export default function ({ onDrop }) {
   const [files, setFiles] = useState([]);
 
-  const onDrop = (event) => {
+  const onDropCb = useCallback((event) => {
     event.preventDefault();
     event.persist();
 
@@ -26,11 +26,15 @@ export default function () {
       }
     }
     setFiles(acceptedFiles);
-  };
+
+    if (onDrop) {
+      onDrop(acceptedFiles);
+    }
+  }, [ onDrop ]);
 
   return (
     <div className="wrapper">
-      <div className="dotted" onDrop={onDrop} onDragOver={event => event.preventDefault()}>
+      <div className="dotted" onDrop={onDropCb} onDragOver={event => event.preventDefault()}>
         <h2>Drop your files here...</h2>
       </div>
       <div className="thumbnail-container">

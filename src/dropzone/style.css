@@ -1,7 +1,11 @@
 .wrapper {
+  border: 1px solid #ddd;
+  border-radius: 2px;
+}
+
+.content {
   display: flex;
   padding: 15px;
-  border: 1px solid #ddd;
 }
 
 .dotted {
@@ -32,4 +36,46 @@
   color: #222;
   margin: 0;
   margin-bottom: 10px;
+}
+
+.footer {
+  display: flex;
+  border-top: 1px solid #ddd;
+  padding: 15px;
+}
+
+.slider {
+  flex: 1;
+}
+
+.slider label {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.slider input {
+  display: block;
+  width: 100%;
+}
+
+.action {
+  flex: 1;
+  text-align: right;
+}
+
+.action button {
+  cursor: pointer;
+  color: #fff;
+  background-color: #28a745;
+  border-color: #28a745;
+  font-size: 16px;
+  padding: 8px;
+  border-style: solid;
+  border-radius: 3px;
+  margin-top: 8px;
+}
+
+.action button:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
 }

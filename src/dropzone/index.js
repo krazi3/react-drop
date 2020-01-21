@@ -33,6 +33,7 @@ export default function ({ onDrop }) {
 
   return (
     <div className="wrapper">
+      <div className="content">
       <div className="dotted" onDrop={onDropCb} onDragOver={event => event.preventDefault()}>
         <h2>Drop your files here...</h2>
       </div>
@@ -42,6 +43,16 @@ export default function ({ onDrop }) {
           <img className="preview" alt="" src={file.preview} />
       </div>
       )}
+    </div>
+      <div className="footer">
+        <div className="slider">
+          <label htmlFor="compression">Compression</label>
+          <input id="compression" type="range" min="0" max="100" />
+        </div>
+        <div className="action">
+          <button type="button">Upload</button>
+        </div>
+      </div>
     </div>
   );
 }

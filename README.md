@@ -4,6 +4,8 @@ This application was developed as part of a frontend exercise. It contains a sin
 
 The uploaded image is drawn on a hidden canvas and then compressed using the `canvas.toBlob` api. The quality for the compression is adjusted using the given slider.
 
+<img src="sample.png" />
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

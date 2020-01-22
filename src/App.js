@@ -5,7 +5,7 @@ import Dropzone from './dropzone';
 function App() {
   return (
     <div className="container">
-      <h1>Welcome</h1>
+      <h1>&#127924;&#9989;</h1>
       <Dropzone />
     </div>
   );

@@ -75,10 +75,16 @@ export default function ({ onDrop }) {
 
   return (
     <div className="wrapper">
+      <div className="dotted" onDrop={onDropCb} onDragOver={event => event.preventDefault()}>
+        <h2>Drop your files here...</h2>
+      </div>
       <div className="content">
-        <div className="dotted" onDrop={onDropCb} onDragOver={event => event.preventDefault()}>
-          <h2>Drop your files here...</h2>
-        </div>
+        {upload && (
+          <div className="preview-wrapper">
+            <h2 className="heading">Original</h2>
+            <img className="preview" alt="" src={upload.preview} />
+          </div>
+        )}
         {file && (
           <div className="preview-wrapper">
             <h2 className="heading">Preview</h2>

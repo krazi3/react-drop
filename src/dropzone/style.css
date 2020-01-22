@@ -39,9 +39,19 @@
 }
 
 .footer {
-  display: flex;
   border-top: 1px solid #ddd;
+}
+
+.footer-internal {
+  display: flex;
   padding: 15px;
+}
+
+.progress {
+  height: 3px;
+  width: 0;
+  background: #009688;
+  transition: all 0.7s ease;
 }
 
 .slider {
@@ -66,8 +76,8 @@
 .action button {
   cursor: pointer;
   color: #fff;
-  background-color: #28a745;
-  border-color: #28a745;
+  background-color: #009688;
+  border-color: #009688;
   font-size: 16px;
   padding: 8px;
   border-style: solid;
@@ -76,6 +86,6 @@
 }
 
 .action button:hover {
-  background-color: #218838;
-  border-color: #1e7e34;
+  background-color: #00796B;
+  border-color: #00695C;
 }

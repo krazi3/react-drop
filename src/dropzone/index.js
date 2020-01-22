@@ -34,23 +34,26 @@ export default function ({ onDrop }) {
   return (
     <div className="wrapper">
       <div className="content">
-      <div className="dotted" onDrop={onDropCb} onDragOver={event => event.preventDefault()}>
-        <h2>Drop your files here...</h2>
-      </div>
-      {file && (
-        <div className="preview-wrapper">
-          <h2 className="heading">Preview</h2>
-          <img className="preview" alt="" src={file.preview} />
-      </div>
-      )}
-    </div>
-      <div className="footer">
-        <div className="slider">
-          <label htmlFor="compression">Compression</label>
-          <input id="compression" type="range" min="0" max="100" />
+        <div className="dotted" onDrop={onDropCb} onDragOver={event => event.preventDefault()}>
+          <h2>Drop your files here...</h2>
         </div>
-        <div className="action">
-          <button type="button">Upload</button>
+        {file && (
+          <div className="preview-wrapper">
+            <h2 className="heading">Preview</h2>
+            <img className="preview" alt="" src={file.preview} />
+          </div>
+        )}
+      </div>
+      <div className="footer">
+        <div className="progress"></div>
+        <div className="footer-internal">
+          <div className="slider">
+            <label htmlFor="compression">Compression</label>
+            <input id="compression" type="range" min="0" max="100" />
+          </div>
+          <div className="action">
+            <button type="button">Upload</button>
+          </div>
         </div>
       </div>
     </div>

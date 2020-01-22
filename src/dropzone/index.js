@@ -3,6 +3,7 @@ import './style.css';
 
 export default function ({ onDrop }) {
   const [file, setFile] = useState(null);
+  const [compression, setCompression] = useState(50);
 
   const onDropCb = useCallback((event) => {
     event.preventDefault();
@@ -48,8 +49,8 @@ export default function ({ onDrop }) {
         <div className="progress"></div>
         <div className="footer-internal">
           <div className="slider">
-            <label htmlFor="compression">Compression</label>
-            <input id="compression" type="range" min="0" max="100" />
+            <label htmlFor="compression">Compression ({compression}%)</label>
+            <input id="compression" type="range" min="0" max="100" onChange={event => setCompression(event.target.value)} />
           </div>
           <div className="action">
             <button type="button">Upload</button>

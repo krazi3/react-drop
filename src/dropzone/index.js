@@ -1,11 +1,12 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import './style.css';
 
-export default function ({ onDrop }) {
+export default function ({ onDrop, onUpload }) {
   const canvasRef = useRef(null);
   const [file, setFile] = useState(null);
   const [upload, setUpload] = useState(null);
   const [compression, setCompression] = useState(50);
+  const [progress, setProgress] = useState(0);
 
   const onDropCb = useCallback((event) => {
     event.preventDefault();
@@ -73,6 +74,13 @@ export default function ({ onDrop }) {
     })
   }, [drawCanvas]);
 
+  const onUploadCb = useCallback(() => {
+    setProgress(100)
+    if (onUpload) {
+      onUpload(file);
+    }
+  }, [file, onUpload])
+
   return (
     <div className="wrapper">
       <div className="dotted" onDrop={onDropCb} onDragOver={event => event.preventDefault()}>
@@ -93,14 +101,14 @@ export default function ({ onDrop }) {
         )}
       </div>
       <div className="footer">
-        <div className="progress"></div>
+        <div className="progress" style={{ width: `${progress}%` }}></div>
         <div className="footer-internal">
           <div className="slider">
             <label htmlFor="compression">Compression ({compression}%)</label>
             <input id="compression" type="range" min="0" max="100" onChange={onCompressionChange} />
           </div>
           <div className="action">
-            <button type="button">Upload</button>
+            <button type="button" onClick={onUploadCb}>Upload</button>
           </div>
         </div>
       </div>

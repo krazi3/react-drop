@@ -4,6 +4,7 @@ import './style.css';
 export default function ({ onDrop }) {
   const canvasRef = useRef(null);
   const [file, setFile] = useState(null);
+  const [upload, setUpload] = useState(null);
   const [compression, setCompression] = useState(50);
 
   const onDropCb = useCallback((event) => {
@@ -27,17 +28,18 @@ export default function ({ onDrop }) {
     }
 
     setFile(uploadedFile);
+    setUpload(uploadedFile);
 
     if (onDrop) {
       onDrop(uploadedFile);
     }
-  }, [ onDrop ]);
+  }, [onDrop]);
 
   useEffect(() => {
-    drawCanvas(file);
+    drawCanvas();
   })
 
-  const drawCanvas = blob => {
+  const drawCanvas = useCallback((cb) => {
     let ctx = canvasRef.current.getContext('2d');
     let reader = new FileReader();
 
@@ -49,12 +51,27 @@ export default function ({ onDrop }) {
         canvasRef.current.width = img.width;
         canvasRef.current.height = img.height;
         ctx.drawImage(img, 0, 0);
+        if (cb) {
+          cb();
+        }
       };
     };
-    if (blob) {
-      reader.readAsDataURL(blob);
+    if (upload) {
+      reader.readAsDataURL(upload);
     }
-  }
+  }, [upload])
+
+  const onCompressionChange = useCallback(event => {
+    event.persist();
+    setCompression(event.target.value);
+
+    drawCanvas(() => {
+      canvasRef.current.toBlob(blob => {
+        blob.preview = URL.createObjectURL(blob);
+        setFile(blob);
+      }, 'image/jpeg', event.target.value / 100)
+    })
+  }, [drawCanvas]);
 
   return (
     <div className="wrapper">
@@ -74,7 +91,7 @@ export default function ({ onDrop }) {
         <div className="footer-internal">
           <div className="slider">
             <label htmlFor="compression">Compression ({compression}%)</label>
-            <input id="compression" type="range" min="0" max="100" onChange={event => setCompression(event.target.value)} />
+            <input id="compression" type="range" min="0" max="100" onChange={onCompressionChange} />
           </div>
           <div className="action">
             <button type="button">Upload</button>

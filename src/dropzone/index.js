@@ -1,7 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import './style.css';
 
 export default function ({ onDrop }) {
+  const canvasRef = useRef(null);
   const [file, setFile] = useState(null);
   const [compression, setCompression] = useState(50);
 
@@ -32,6 +33,29 @@ export default function ({ onDrop }) {
     }
   }, [ onDrop ]);
 
+  useEffect(() => {
+    drawCanvas(file);
+  })
+
+  const drawCanvas = blob => {
+    let ctx = canvasRef.current.getContext('2d');
+    let reader = new FileReader();
+
+    reader.onloadend = () => {
+      let img = new Image();
+      img.src = reader.result;
+      img.onload = () => {
+        // Set canvas size equal to image size
+        canvasRef.current.width = img.width;
+        canvasRef.current.height = img.height;
+        ctx.drawImage(img, 0, 0);
+      };
+    };
+    if (blob) {
+      reader.readAsDataURL(blob);
+    }
+  }
+
   return (
     <div className="wrapper">
       <div className="content">
@@ -57,6 +81,7 @@ export default function ({ onDrop }) {
           </div>
         </div>
       </div>
+      <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
     </div>
   );
 }

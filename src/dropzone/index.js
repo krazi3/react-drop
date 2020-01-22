@@ -12,24 +12,35 @@ export default function ({ onDrop, onUpload }) {
     event.preventDefault();
     event.persist();
 
-    let uploadedFile;
+    let uploadedFile = null;
 
     if (event.dataTransfer.items) {
       // loop and get first file
       for (let i = 0; i < event.dataTransfer.items.length; i++) {
         if (event.dataTransfer.items[i].kind === 'file') {
-          uploadedFile = event.dataTransfer.items[i].getAsFile();
+          let fl = event.dataTransfer.items[i].getAsFile();
+          // check fie mime type
+          if (['image/jpeg', 'image/jpg', 'image.png'].includes(fl.type)) {
+            uploadedFile = fl;
+            uploadedFile.preview = URL.createObjectURL(uploadedFile);
+            break;
+          }
+        }
+      }
+    } else {
+      for (let i = 0; i < event.dataTransfer.items.length; i++) {
+        if (['image/jpeg', 'image/jpg', 'image.png'].includes(event.dataTransfer.files[i].type)) {
+          uploadedFile = event.dataTransfer.files[i];
           uploadedFile.preview = URL.createObjectURL(uploadedFile);
           break;
         }
       }
-    } else {
-      uploadedFile = event.dataTransfer.files[0];
-      uploadedFile.preview = URL.createObjectURL(uploadedFile);
     }
 
-    setFile(uploadedFile);
-    setUpload(uploadedFile);
+    if (uploadedFile) {
+      setFile(uploadedFile);
+      setUpload(uploadedFile);
+    }
 
     if (onDrop) {
       onDrop(uploadedFile);
@@ -84,7 +95,7 @@ export default function ({ onDrop, onUpload }) {
   return (
     <div className="wrapper">
       <div className="dotted" onDrop={onDropCb} onDragOver={event => event.preventDefault()}>
-        <h2>Drop your files here...</h2>
+        <h2>Drop your files here... (jpg, png)</h2>
       </div>
       <div className="content">
         {upload && (
